@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour {
 
+    public GameObject camera;
+
     public float movementSpeed = 10;
     public float turningSpeed = 60;
     public float jumpHeight = 10;
@@ -11,6 +13,8 @@ public class CharacterMovement : MonoBehaviour {
 
     void Update()
     {
+        rigidbody.transform.forward = camera.transform.forward;
+
         float horizontal = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
         transform.Translate(horizontal, 0, 0);
 
