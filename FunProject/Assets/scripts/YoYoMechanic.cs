@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class YoYoMechanic : MonoBehaviour {
 
-    public Rigidbody yoyoYo;
+    public GameObject yoyoMesh;
     public GameObject charcter;
     public GameObject camera;
-    public float force = 20f;
+    public float speed = 20f;
     public int spawnDistance = 10;
+    public float maxDistance;
 
-	// Use this for initialization
-	void Start () {
+    public bool moving = false;
+
+    Vector3 direction;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -21,12 +26,26 @@ public class YoYoMechanic : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 direction = camera.transform.forward;
+            direction = camera.transform.forward;
 
-            //start in the character
-            yoyoYo.transform.position = charcter.transform.position + direction * spawnDistance;
+            //start infront of the character
+            yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
 
-            yoyoYo.AddForce(direction * force);
+
+            moving = true;
+        }
+
+        if (moving == true)
+        {
+            yoyoMesh.transform.Translate(direction * speed * Time.deltaTime);
+        }
+
+        var dist = Vector3.Distance(charcter.transform.position, yoyoMesh.transform.position);
+
+        if (dist > maxDistance)
+        {
+            moving = false;
+
         }
 		
 	}
