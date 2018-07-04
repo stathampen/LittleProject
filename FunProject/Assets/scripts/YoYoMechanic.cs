@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class YoYoMechanic : MonoBehaviour {
 
-    public GameObject yoyoMesh;
+    public GameObject yoyomodel;
     public GameObject charcter;
-    public GameObject camera;
+    public Camera cam;
+
     public float speed = 20f;
     public int spawnDistance = 10;
     public float maxDistance;
@@ -26,27 +27,32 @@ public class YoYoMechanic : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0))
         {
-            direction = camera.transform.forward;
+            direction = cam.transform.forward;
+
+            yoyomodel.GetComponent<Rigidbody>().AddForce(direction * 500);
 
             //start infront of the character
-            yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
-
-
-            moving = true;
+            //yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
         }
 
-        if (moving == true)
+        Vector3 difference = new Vector3(
+  yoyomodel.transform.position.x - charcter.transform.position.x,
+yoyomodel.transform.position.y - charcter.transform.position.y,
+yoyomodel.transform.position.z - charcter.transform.position.z);
+
+        float distance = Mathf.Sqrt(
+  Mathf.Pow(difference.x, 2f) +
+  Mathf.Pow(difference.y, 2f) +
+  Mathf.Pow(difference.z, 2f));
+
+        if (distance > maxDistance)
         {
-            yoyoMesh.transform.Translate(direction * speed * Time.deltaTime);
-        }
+            yoyomodel.GetComponent<Rigidbody>().velocity = Vector3.zero;    
 
-        var dist = Vector3.Distance(charcter.transform.position, yoyoMesh.transform.position);
-
-        if (dist > maxDistance)
-        {
-            moving = false;
+            //go back to origin somehow?
 
         }
-		
-	}
+            
+
+    }
 }
