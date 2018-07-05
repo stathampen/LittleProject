@@ -13,8 +13,15 @@ public class YoYoMechanic : MonoBehaviour {
     public float maxDistance;
 
     public bool moving = false;
+    public bool returning = false;
 
     Vector3 direction;
+
+    //private stuff
+    float startTime;
+
+
+
 
     // Use this for initialization
     void Start () {
@@ -36,23 +43,35 @@ public class YoYoMechanic : MonoBehaviour {
         }
 
         Vector3 difference = new Vector3(
-  yoyomodel.transform.position.x - charcter.transform.position.x,
-yoyomodel.transform.position.y - charcter.transform.position.y,
-yoyomodel.transform.position.z - charcter.transform.position.z);
+            yoyomodel.transform.position.x - charcter.transform.position.x,
+            yoyomodel.transform.position.y - charcter.transform.position.y,
+            yoyomodel.transform.position.z - charcter.transform.position.z);
 
         float distance = Mathf.Sqrt(
-  Mathf.Pow(difference.x, 2f) +
-  Mathf.Pow(difference.y, 2f) +
-  Mathf.Pow(difference.z, 2f));
+            Mathf.Pow(difference.x, 2f) +
+            Mathf.Pow(difference.y, 2f) +
+            Mathf.Pow(difference.z, 2f));
 
-        if (distance > maxDistance)
+        if (distance > maxDistance && returning != true)
         {
-            yoyomodel.GetComponent<Rigidbody>().velocity = Vector3.zero;    
+            //freezes everything when it reaches a certain distance
+            //yoyomodel.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
-            //go back to origin somehow?
 
+            returning = true;
+
+            startTime = Time.time;
+          
         }
             
+        if (returning == true)
+        {
+            float distcovered = (Time.time - startTime) * speed;
+
+            float fracjourney = distcovered / distance;
+
+            yoyomodel.transform.position = Vector3.Lerp(yoyomodel.transform.position, charcter.transform.position, fracjourney);
+        }
 
     }
 }
