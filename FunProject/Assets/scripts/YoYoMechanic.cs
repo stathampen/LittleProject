@@ -8,19 +8,17 @@ public class YoYoMechanic : MonoBehaviour {
     public GameObject charcter;
     public Camera cam;
 
-    public float speed = 20f;
-    public int spawnDistance = 10;
+    public float force = 10f;
+    public float rtnspeed = 2f;
+    public int spawnDistance = 5;
     public float maxDistance;
 
-    public bool moving = false;
-    public bool returning = false;
 
     Vector3 direction;
 
     //private stuff
     float startTime;
-
-
+    bool returning = false;
 
 
     // Use this for initialization
@@ -36,8 +34,7 @@ public class YoYoMechanic : MonoBehaviour {
         {
             direction = cam.transform.forward;
 
-            yoyomodel.GetComponent<Rigidbody>().AddForce(direction * 500);
-
+            yoyomodel.GetComponent<Rigidbody>().AddForce(direction * force);
             //start infront of the character
             //yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
         }
@@ -66,7 +63,7 @@ public class YoYoMechanic : MonoBehaviour {
             
         if (returning == true)
         {
-            float distcovered = (Time.time - startTime) * speed;
+            float distcovered = (Time.time - startTime) * rtnspeed;
 
             float fracjourney = distcovered / distance;
 

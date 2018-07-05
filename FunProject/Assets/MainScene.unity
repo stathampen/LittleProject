@@ -243,11 +243,10 @@ MonoBehaviour:
   yoyomodel: {fileID: 68155023}
   charcter: {fileID: 1798652571}
   cam: {fileID: 2000091002}
-  speed: 20
+  force: 50
+  rtnspeed: 2
   spawnDistance: 2
   maxDistance: 20
-  moving: 0
-  returning: 0
 --- !u!4 &545685515
 Transform:
   m_ObjectHideFlags: 0
@@ -407,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 1552496346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.2127323, y: 2.2449636, z: 2.212732}
+  m_LocalScale: {x: 5.9867644, y: 6.073968, z: 5.986762}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
