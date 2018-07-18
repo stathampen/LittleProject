@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,10 +49,22 @@ public class YoYoMechanic : MonoBehaviour {
             //yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
         }
 
+        if (yoyoSpawned)
+        {
+            StringHandler();
+
+            Returning();
+        }
+        
+
+    }
+
+    private void Returning()
+    {
         Vector3 difference = new Vector3(
-            yoyoSpawned.transform.position.x - character.transform.position.x,
-            yoyoSpawned.transform.position.y - character.transform.position.y,
-            yoyoSpawned.transform.position.z - character.transform.position.z);
+    yoyoSpawned.transform.position.x - character.transform.position.x,
+    yoyoSpawned.transform.position.y - character.transform.position.y,
+    yoyoSpawned.transform.position.z - character.transform.position.z);
 
         float distance = Mathf.Sqrt(
             Mathf.Pow(difference.x, 2f) +
@@ -67,9 +80,9 @@ public class YoYoMechanic : MonoBehaviour {
             returning = true;
 
             startTime = Time.time;
-          
+
         }
-            
+
         if (returning == true)
         {
             float distcovered = (Time.time - startTime) * rtnspeed;
@@ -78,8 +91,6 @@ public class YoYoMechanic : MonoBehaviour {
 
             yoyoSpawned.transform.position = Vector3.Lerp(yoyoPrefab.transform.position, character.transform.position, fracjourney);
         }
-
-        //StringHandler();
 
     }
 
