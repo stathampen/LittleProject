@@ -5,7 +5,7 @@ using UnityEngine;
 public class YoYoMechanic : MonoBehaviour {
 
     public GameObject yoyomodel;
-    public GameObject charcter;
+    public GameObject character;
     public Camera cam;
 
     public float force = 10f;
@@ -34,15 +34,18 @@ public class YoYoMechanic : MonoBehaviour {
         {
             direction = cam.transform.forward;
 
-            yoyomodel.GetComponent<Rigidbody>().AddForce(direction * force);
+
+            Instantiate(yoyomodel).GetComponent<Rigidbody>().AddForce(direction * force, ForceMode.Impulse);
+
+            //yoyomodel.GetComponent<Rigidbody>().AddForce(direction * force);
             //start infront of the character
             //yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
         }
 
         Vector3 difference = new Vector3(
-            yoyomodel.transform.position.x - charcter.transform.position.x,
-            yoyomodel.transform.position.y - charcter.transform.position.y,
-            yoyomodel.transform.position.z - charcter.transform.position.z);
+            yoyomodel.transform.position.x - character.transform.position.x,
+            yoyomodel.transform.position.y - character.transform.position.y,
+            yoyomodel.transform.position.z - character.transform.position.z);
 
         float distance = Mathf.Sqrt(
             Mathf.Pow(difference.x, 2f) +
@@ -67,7 +70,7 @@ public class YoYoMechanic : MonoBehaviour {
 
             float fracjourney = distcovered / distance;
 
-            yoyomodel.transform.position = Vector3.Lerp(yoyomodel.transform.position, charcter.transform.position, fracjourney);
+            yoyomodel.transform.position = Vector3.Lerp(yoyomodel.transform.position, character.transform.position, fracjourney);
         }
 
     }
