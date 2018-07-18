@@ -34,7 +34,7 @@ public class YoYoMechanic : MonoBehaviour {
         //when the user clicks the left mouse button the yo-yo will go forward depending on the view from the (camera/character?)
         if (Input.GetMouseButtonDown(0))
         {
-            if (!yoyoSpawned)   //destroy the yoyo if it's already present
+            if (yoyoSpawned)   //destroy the yoyo if it's already present
             {
                 Destroy(yoyoSpawned);
             }
