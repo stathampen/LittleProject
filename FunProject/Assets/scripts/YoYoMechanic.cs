@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class YoYoMechanic : MonoBehaviour {
 
-    public GameObject yoyomodel;
+    public GameObject yoyoPrefab;
     public GameObject character;
     public Camera cam;
 
@@ -20,22 +20,28 @@ public class YoYoMechanic : MonoBehaviour {
     float startTime;
     bool returning = false;
 
+    private GameObject yoyoSpawned;
+    private LineRenderer yoyoString;
 
     // Use this for initialization
     void Start () {
-		
-	}
+		yoyoString = GetComponent<LineRenderer>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         //when the user clicks the left mouse button the yo-yo will go forward depending on the view from the (camera/character?)
-
         if (Input.GetMouseButtonDown(0))
         {
+            if (!yoyoSpawned)   //destroy the yoyo if it's already present
+            {
+                Destroy(yoyoSpawned);
+            }
+
             direction = cam.transform.forward;
-
-
-            Instantiate(yoyomodel).GetComponent<Rigidbody>().AddForce(direction * force, ForceMode.Impulse);
+            
+            yoyoSpawned = Instantiate(yoyoPrefab);
+            yoyoSpawned.GetComponent<Rigidbody>().AddForce(direction * force, ForceMode.Impulse);
 
             //yoyomodel.GetComponent<Rigidbody>().AddForce(direction * force);
             //start infront of the character
@@ -43,9 +49,9 @@ public class YoYoMechanic : MonoBehaviour {
         }
 
         Vector3 difference = new Vector3(
-            yoyomodel.transform.position.x - character.transform.position.x,
-            yoyomodel.transform.position.y - character.transform.position.y,
-            yoyomodel.transform.position.z - character.transform.position.z);
+            yoyoSpawned.transform.position.x - character.transform.position.x,
+            yoyoSpawned.transform.position.y - character.transform.position.y,
+            yoyoSpawned.transform.position.z - character.transform.position.z);
 
         float distance = Mathf.Sqrt(
             Mathf.Pow(difference.x, 2f) +
@@ -70,8 +76,16 @@ public class YoYoMechanic : MonoBehaviour {
 
             float fracjourney = distcovered / distance;
 
-            yoyomodel.transform.position = Vector3.Lerp(yoyomodel.transform.position, character.transform.position, fracjourney);
+            yoyoSpawned.transform.position = Vector3.Lerp(yoyoPrefab.transform.position, character.transform.position, fracjourney);
         }
 
+        //StringHandler();
+
+    }
+
+    void StringHandler()
+    {
+        //makes sure the 'string' continues to run between the yoyo and character
+        yoyoString.SetPositions(new Vector3[] {character.transform.position, yoyoSpawned.transform.position});
     }
 }

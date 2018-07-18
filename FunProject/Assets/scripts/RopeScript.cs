@@ -13,6 +13,6 @@ public class RopeScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        line.SetPositions(new Vector3[] { transform.position, target.transform.position });
+        
 	}
 }
