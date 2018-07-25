@@ -28,9 +28,9 @@ public class YoYoMechanic : MonoBehaviour {
     void Start () {
 		yoyoString = GetComponent<LineRenderer>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         //when the user clicks the left mouse button the yo-yo will go forward depending on the view from the (camera/character?)
         if (Input.GetMouseButtonDown(0))
         {
@@ -41,22 +41,23 @@ public class YoYoMechanic : MonoBehaviour {
 
             direction = cam.transform.forward;
             
+            //create the yoyo
             yoyoSpawned = Instantiate(yoyoPrefab);
             yoyoSpawned.GetComponent<Rigidbody>().AddForce(direction * force, ForceMode.Impulse);
+            
 
             //yoyomodel.GetComponent<Rigidbody>().AddForce(direction * force);
             //start infront of the character
             //yoyoMesh.transform.position = charcter.transform.position + direction * spawnDistance;
         }
 
-        if (yoyoSpawned)
+        if (yoyoSpawned != null)
         {
             StringHandler();
 
             Returning();
         }
-        
-
+       
     }
 
     private void Returning()
@@ -89,7 +90,7 @@ public class YoYoMechanic : MonoBehaviour {
 
             float fracjourney = distcovered / distance;
 
-            yoyoSpawned.transform.position = Vector3.Lerp(yoyoPrefab.transform.position, character.transform.position, fracjourney);
+            yoyoSpawned.transform.position = Vector3.Slerp(yoyoSpawned.transform.position, character.transform.position, fracjourney);
         }
 
     }
